@@ -30,17 +30,20 @@ namespace SchoolPractice
         public static double C = 2.0;
         public static double D = 1.0;
 
-        List<double> classGrades = new List<double>();
+
+        private double newQualScore;
         public void AddGrade(int courseCredits, double grade)
         {
-            double classGrade = courseCredits * grade;
-            classGrades.Add(classGrade);
+            NumberOfCredits += courseCredits;
+            double qualityScore = courseCredits * grade;
+            newQualScore += qualityScore;
+            Gpa = newQualScore / NumberOfCredits;
         }
 
-        private double NewGpa()
+        public double NewGpa()
         {
-            double allGrades = classGrades.Sum();
-            double newGpa = allGrades / classGrades.Count;
+            double currentQualScore = Gpa * NumberOfCredits;
+            double newGpa = currentQualScore / NumberOfCredits;
             return newGpa;
         }
         public string GetGradeLevel()
@@ -64,9 +67,30 @@ namespace SchoolPractice
             }
             return gradeLevel;
         }
-            
 
+        public override string ToString()
+        {
+            return ($"{Name} (Credits: {NumberOfCredits}, GPA: {Gpa})");
+        }
 
+        public override bool Equals(object obj)
+        {
+            if(obj == this)
+            {
+                return true;
+            }
+            if(obj == null)
+            {
+                return false;
+            }
+            if (obj.GetType() != this.GetType())
+            {
+                return false;
+            }
+
+            Student x = obj as Student;
+            return x.studentId == studentId; 
+        }
     }
     
 }
